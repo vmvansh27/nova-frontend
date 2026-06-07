@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 
 const TOKEN_KEY = "nova_token";
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000/api";
+const REQUEST_TIMEOUT_MS = 15000;
 
 export type TxType = "deposit" | "withdraw" | "investment" | "profit" | "referral" | "signup_bonus";
 export type TxStatus = "pending" | "completed" | "rejected" | "active";
@@ -62,7 +63,19 @@ export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promi
     const token = window.localStorage.getItem(TOKEN_KEY);
     if (token) headers.set("Authorization", `Bearer ${token}`);
   }
-  const response = await fetch(`${API_URL}${path}`, { ...options, headers });
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}${path}`, { ...options, headers, signal: controller.signal });
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error("API request timed out. Check VITE_API_URL and backend CORS settings.");
+    }
+    throw new Error("Could not reach API. Check VITE_API_URL and backend CORS settings.");
+  } finally {
+    window.clearTimeout(timeout);
+  }
   const body = (await response.json().catch(() => ({}))) as T & {
     error?: string;
     errors?: Array<{ msg?: string }>;
