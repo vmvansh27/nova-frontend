@@ -8,8 +8,9 @@ export const Route = createFileRoute("/app/wallet")({ component: WalletPage });
 
 function WalletPage() {
   const { user, balance } = useApp();
+  const walletAddress = user?.platformWalletAddress || user?.walletAddress || "";
   const copy = () => {
-    navigator.clipboard.writeText(user!.walletAddress);
+    navigator.clipboard.writeText(walletAddress);
     toast.success("Wallet address copied");
   };
 
@@ -25,7 +26,7 @@ function WalletPage() {
             </div>
             <div className="text-4xl font-bold mt-1">${balance.toFixed(2)}</div>
             <div className="mt-3 text-xs text-muted-foreground font-mono flex items-center gap-2">
-              {user?.walletAddress}
+              Platform wallet: {walletAddress}
               <button onClick={copy} className="text-primary hover:text-primary-glow">
                 <Copy className="h-3 w-3" />
               </button>

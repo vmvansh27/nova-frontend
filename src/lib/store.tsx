@@ -34,6 +34,8 @@ export interface User {
   isAdmin: boolean;
   referralCode: string;
   walletAddress: string;
+  platformWalletAddress?: string;
+  assetMode?: "native" | "bep20";
 }
 
 interface AppState {
@@ -119,7 +121,10 @@ function mapUser(raw: RawUser): User {
     name: raw.name || raw.email.split("@")[0],
     isAdmin: Boolean(raw.isAdmin),
     referralCode: raw.referralCode || "",
-    walletAddress: raw.walletAddress || "",
+    walletAddress: raw.platformWalletAddress || raw.walletAddress || "",
+    platformWalletAddress: raw.platformWalletAddress || raw.walletAddress || "",
+    assetMode:
+      raw.assetMode === "native" || raw.assetMode === "bep20" ? raw.assetMode : undefined,
   };
 }
 

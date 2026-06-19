@@ -13,6 +13,10 @@ function Deposit() {
   const { user, deposit } = useApp();
   const [amount, setAmount] = useState("");
   const [hash, setHash] = useState("");
+  const assetMode = user?.assetMode || "native";
+  const assetLabel = assetMode === "native" ? "BNB" : "BEP20 token";
+  const networkLabel = assetMode === "native" ? "BNB Smart Chain" : "BEP20";
+  const walletAddress = user?.platformWalletAddress || user?.walletAddress || "";
 
   const submit = async () => {
     const a = parseFloat(amount);
@@ -31,9 +35,10 @@ function Deposit() {
 
   return (
     <div className="space-y-6 max-w-3xl">
-      <h1 className="text-2xl md:text-3xl font-bold">Deposit BEP20</h1>
+      <h1 className="text-2xl md:text-3xl font-bold">Deposit {assetLabel}</h1>
       <p className="text-sm text-muted-foreground">
-        Send USDT / BNB / BTC on the Binance Smart Chain network to your wallet below.
+        Send only the configured {assetLabel} asset to the platform wallet below, then paste the
+        transaction hash to credit your balance.
       </p>
 
       <div className="gradient-card rounded-2xl border border-border p-6 shadow-card">
@@ -43,14 +48,16 @@ function Deposit() {
           </div>
           <div className="flex-1 min-w-[220px] space-y-3">
             <div>
-              <div className="text-xs text-muted-foreground">Your deposit address (BEP20)</div>
-              <div className="font-mono text-sm break-all mt-1">{user?.walletAddress}</div>
+              <div className="text-xs text-muted-foreground">
+                Platform deposit wallet ({networkLabel})
+              </div>
+              <div className="font-mono text-sm break-all mt-1">{walletAddress}</div>
             </div>
             <Button
               variant="outline"
               size="sm"
               onClick={() => {
-                navigator.clipboard.writeText(user!.walletAddress);
+                navigator.clipboard.writeText(walletAddress);
                 toast.success("Copied");
               }}
             >
@@ -58,14 +65,15 @@ function Deposit() {
             </Button>
             <div className="text-xs text-warning flex gap-2">
               <ShieldAlert className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-              Only send BEP20 tokens to this address. Other networks will result in loss of funds.
+              Only send {assetLabel} on {networkLabel} to this address. Other networks may result
+              in loss of funds.
             </div>
           </div>
         </div>
       </div>
 
       <div className="gradient-card rounded-2xl border border-border p-6 shadow-card space-y-4">
-        <h3 className="font-semibold">Confirm deposit (demo)</h3>
+        <h3 className="font-semibold">Confirm deposit</h3>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label>Amount (USD)</Label>

@@ -13,6 +13,7 @@ export const Route = createFileRoute("/app")({
 function AppLayout() {
   const { user, loading } = useApp();
   const nav = useNavigate();
+  const walletAddress = user?.platformWalletAddress || user?.walletAddress || "";
 
   useEffect(() => {
     if (!loading && !user) nav({ to: "/login" });
@@ -42,7 +43,7 @@ function AppLayout() {
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
                 <div className="text-xs text-muted-foreground">{user.email}</div>
-                <div className="text-xs text-muted-foreground font-mono">{user.walletAddress}</div>
+                <div className="text-xs text-muted-foreground font-mono">{walletAddress}</div>
               </div>
               <div className="h-9 w-9 rounded-full gradient-primary shadow-glow grid place-items-center text-sm font-bold">
                 {user.name.charAt(0).toUpperCase()}

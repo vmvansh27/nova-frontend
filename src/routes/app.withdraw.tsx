@@ -70,6 +70,7 @@ function Withdraw() {
             <tr>
               <th className="text-left p-3">Date</th>
               <th className="text-left p-3">Address</th>
+              <th className="text-left p-3">Tx</th>
               <th className="text-right p-3">Amount</th>
               <th className="text-right p-3">Status</th>
             </tr>
@@ -77,7 +78,7 @@ function Withdraw() {
           <tbody>
             {history.length === 0 && (
               <tr>
-                <td colSpan={4} className="p-6 text-center text-muted-foreground">
+                <td colSpan={5} className="p-6 text-center text-muted-foreground">
                   No withdrawals yet.
                 </td>
               </tr>
@@ -86,6 +87,7 @@ function Withdraw() {
               <tr key={t.id} className="border-t border-border">
                 <td className="p-3">{new Date(t.date).toLocaleString()}</td>
                 <td className="p-3 font-mono text-xs truncate max-w-[200px]">{t.note}</td>
+                <td className="p-3 font-mono text-xs truncate max-w-[160px]">{t.hash || "-"}</td>
                 <td className="p-3 text-right">${t.amount.toFixed(2)}</td>
                 <td className="p-3 text-right capitalize">
                   <span

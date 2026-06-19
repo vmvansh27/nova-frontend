@@ -61,6 +61,7 @@ interface Withdrawal {
   amount: number;
   address: string;
   status: string;
+  txHash?: string;
   user?: { email: string };
 }
 
@@ -353,6 +354,11 @@ function Admin() {
                     <div className="text-xs text-muted-foreground font-mono truncate">
                       {withdrawal.address}
                     </div>
+                    {withdrawal.txHash && (
+                      <div className="text-xs text-success font-mono truncate">
+                        {withdrawal.txHash}
+                      </div>
+                    )}
                   </div>
                   <div className="flex gap-2 shrink-0">
                     <Button
