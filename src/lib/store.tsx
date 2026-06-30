@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 
 const TOKEN_KEY = "nova_token";
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000/api";
-const REQUEST_TIMEOUT_MS = 15000;
+const REQUEST_TIMEOUT_MS = 60000;
 
 export type TxType = "deposit" | "withdraw" | "investment" | "profit" | "referral" | "signup_bonus";
 export type TxStatus = "pending" | "completed" | "rejected" | "active";
@@ -125,8 +125,7 @@ function mapUser(raw: RawUser): User {
     referralCode: raw.referralCode || "",
     walletAddress: raw.platformWalletAddress || raw.walletAddress || "",
     platformWalletAddress: raw.platformWalletAddress || raw.walletAddress || "",
-    assetMode:
-      raw.assetMode === "native" || raw.assetMode === "bep20" ? raw.assetMode : undefined,
+    assetMode: raw.assetMode === "native" || raw.assetMode === "bep20" ? raw.assetMode : undefined,
     kycStatus:
       raw.kycStatus === "not_started" ||
       raw.kycStatus === "pending" ||
