@@ -11,6 +11,7 @@ import {
   Receipt,
   LogOut,
   Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 import {
   Sidebar,
@@ -35,6 +36,7 @@ const items = [
   { title: "Deposit", url: "/app/deposit", icon: ArrowDownToLine },
   { title: "Withdraw", url: "/app/withdraw", icon: ArrowUpFromLine },
   { title: "NFTs", url: "/app/nft", icon: ImageIcon },
+  { title: "KYC", url: "/app/kyc", icon: ShieldCheck },
   { title: "Referral", url: "/app/referral", icon: Users },
   { title: "Transactions", url: "/app/transactions", icon: Receipt },
 ];

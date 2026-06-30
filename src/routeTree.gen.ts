@@ -19,6 +19,7 @@ import { Route as AppTransactionsRouteImport } from './routes/app.transactions'
 import { Route as AppReferralRouteImport } from './routes/app.referral'
 import { Route as AppNftRouteImport } from './routes/app.nft'
 import { Route as AppMarketRouteImport } from './routes/app.market'
+import { Route as AppKycRouteImport } from './routes/app.kyc'
 import { Route as AppInvestRouteImport } from './routes/app.invest'
 import { Route as AppHomeRouteImport } from './routes/app.home'
 import { Route as AppDepositRouteImport } from './routes/app.deposit'
@@ -73,6 +74,11 @@ const AppMarketRoute = AppMarketRouteImport.update({
   path: '/market',
   getParentRoute: () => AppRoute,
 } as any)
+const AppKycRoute = AppKycRouteImport.update({
+  id: '/kyc',
+  path: '/kyc',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppInvestRoute = AppInvestRouteImport.update({
   id: '/invest',
   path: '/invest',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/app/deposit': typeof AppDepositRoute
   '/app/home': typeof AppHomeRoute
   '/app/invest': typeof AppInvestRoute
+  '/app/kyc': typeof AppKycRoute
   '/app/market': typeof AppMarketRoute
   '/app/nft': typeof AppNftRoute
   '/app/referral': typeof AppReferralRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/app/deposit': typeof AppDepositRoute
   '/app/home': typeof AppHomeRoute
   '/app/invest': typeof AppInvestRoute
+  '/app/kyc': typeof AppKycRoute
   '/app/market': typeof AppMarketRoute
   '/app/nft': typeof AppNftRoute
   '/app/referral': typeof AppReferralRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/app/deposit': typeof AppDepositRoute
   '/app/home': typeof AppHomeRoute
   '/app/invest': typeof AppInvestRoute
+  '/app/kyc': typeof AppKycRoute
   '/app/market': typeof AppMarketRoute
   '/app/nft': typeof AppNftRoute
   '/app/referral': typeof AppReferralRoute
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/app/deposit'
     | '/app/home'
     | '/app/invest'
+    | '/app/kyc'
     | '/app/market'
     | '/app/nft'
     | '/app/referral'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/app/deposit'
     | '/app/home'
     | '/app/invest'
+    | '/app/kyc'
     | '/app/market'
     | '/app/nft'
     | '/app/referral'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/app/deposit'
     | '/app/home'
     | '/app/invest'
+    | '/app/kyc'
     | '/app/market'
     | '/app/nft'
     | '/app/referral'
@@ -262,6 +274,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMarketRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/kyc': {
+      id: '/app/kyc'
+      path: '/kyc'
+      fullPath: '/app/kyc'
+      preLoaderRoute: typeof AppKycRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/invest': {
       id: '/app/invest'
       path: '/invest'
@@ -290,6 +309,7 @@ interface AppRouteChildren {
   AppDepositRoute: typeof AppDepositRoute
   AppHomeRoute: typeof AppHomeRoute
   AppInvestRoute: typeof AppInvestRoute
+  AppKycRoute: typeof AppKycRoute
   AppMarketRoute: typeof AppMarketRoute
   AppNftRoute: typeof AppNftRoute
   AppReferralRoute: typeof AppReferralRoute
@@ -302,6 +322,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDepositRoute: AppDepositRoute,
   AppHomeRoute: AppHomeRoute,
   AppInvestRoute: AppInvestRoute,
+  AppKycRoute: AppKycRoute,
   AppMarketRoute: AppMarketRoute,
   AppNftRoute: AppNftRoute,
   AppReferralRoute: AppReferralRoute,

@@ -19,6 +19,7 @@ export interface Transaction {
 
 export interface Investment {
   id: string;
+  plan?: string;
   amount: number;
   roi: number;
   expectedReturn: number;
@@ -36,6 +37,7 @@ export interface User {
   walletAddress: string;
   platformWalletAddress?: string;
   assetMode?: "native" | "bep20";
+  kycStatus?: "not_started" | "pending" | "approved" | "rejected";
 }
 
 interface AppState {
@@ -125,6 +127,13 @@ function mapUser(raw: RawUser): User {
     platformWalletAddress: raw.platformWalletAddress || raw.walletAddress || "",
     assetMode:
       raw.assetMode === "native" || raw.assetMode === "bep20" ? raw.assetMode : undefined,
+    kycStatus:
+      raw.kycStatus === "not_started" ||
+      raw.kycStatus === "pending" ||
+      raw.kycStatus === "approved" ||
+      raw.kycStatus === "rejected"
+        ? raw.kycStatus
+        : undefined,
   };
 }
 
@@ -143,6 +152,7 @@ function mapTransaction(raw: RawTransaction): Transaction {
 function mapInvestment(raw: RawInvestment): Investment {
   return {
     id: raw.id || raw._id,
+    plan: raw.plan,
     amount: raw.amount,
     roi: raw.roi,
     expectedReturn: raw.expectedReturn,
